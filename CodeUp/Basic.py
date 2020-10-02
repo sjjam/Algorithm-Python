@@ -105,3 +105,169 @@
 # 1030
 # a = input()
 # print(a)
+
+# 1031
+# a = format(int(input()), 'o')
+# print(a)
+
+# 1032
+# a = format(int(input()), 'x')
+# print(a)
+
+# 1033
+# a = int(input())
+# print("%X" %a)
+
+# 1034
+# a = input()
+# print(int(a, 8))
+
+# 1035
+# a = input()
+# b = int(a, 16)
+# print('%o' %b)
+
+# 1036
+# a = input()
+# print(ord(a))
+
+# 1037
+# a = int(input())
+# print(chr(a))
+
+# 1038
+# a, b = map(int, input().split())
+# print(a+b)
+
+# 1039
+# a, b = map(int, input().split())
+# print(a+b)
+
+# 1040
+# a = int(input())
+# print(-a)
+
+# 1041
+# a = input()
+# b = ord(a) + 1
+# print(chr(b))
+
+# 1042
+# a, b = map(int, input().split())
+# print(a // b)
+
+# 1043
+# a, b = map(int, input().split())
+# print(a % b)
+
+# 1044
+# a = int(input())
+# print(a + 1)
+
+# 1045
+# a, b = map(int, input().split())
+# print(a + b)
+# print(a - b)
+# print(a * b)
+# print(a // b)
+# print(a % b)
+# c = a / b
+# print('%.2f' %c)
+
+# 1046
+# a, b, c = map(int, input().split())
+# sum = a + b + c
+# print(sum)
+# avg = sum/3
+# print('%.1f' %avg)
+
+# 1047
+# a = int(input())
+# print(a * 2)
+
+# 1048
+# a, b = map(int, input().split())
+# print(a << b)
+
+# 1049
+# a, b = map(int, input().split())
+# if a > b:
+#     print(1)
+# else:
+#     print(0)
+
+# 1050
+# a, b = map(int, input().split())
+# if a == b:
+#     print(1)
+# else:
+#     print(0)
+
+# 1051
+# a, b = map(int, input().split())
+# if b >= a:
+#     print(1)
+# else:
+#     print(0)
+
+# 1052
+# a, b = map(int, input().split())
+# if a != b:
+#     print(1)
+# else:
+#     print(0)
+
+# 1053
+# a = int(input())
+# if a == 1:
+#     print(0)
+# else:
+#     print(1)
+
+# 1054
+# a, b = map(int, input().split())
+
+# if a == 1 and b ==1:
+#     print(1)
+# else:
+#     print(0)
+
+# 1055
+# a, b = map(int, input().split())
+
+# if a == 1 or b ==1:
+#     print(1)
+# else:
+#     print(0)
+
+# 1056
+# a, b = map(int, input().split())
+
+# if a != b:
+#     print(1)
+# else:
+#     print(0)
+
+# 1057
+# a, b = map(int, input().split())
+
+# if a == b:
+#     print(1)
+# else:
+#     print(0)
+
+# 1058
+# a, b = map(int, input().split())
+
+# if a == 0 and b == 0:
+#     print(1)
+# else:
+#     print(0)
+
+# 1059
+# a = int(input())
+# print(~a)
+
+# 1060
+# a, b = map(int, input().split())
+# print(a & b)
