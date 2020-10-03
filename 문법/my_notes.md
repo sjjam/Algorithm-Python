@@ -74,3 +74,13 @@ print(c)
 
 ### 배열을 정렬한 후 조합을 실행하면 결과도 정렬이 된 상태로 나온다
 
+
+
+### 2차원 배열에 값 입력 받기
+
+a = [[0]*19 for i in range(19)]
+
+for i in range(19):
+    x = list(map(int, input().split()))
+    for j in range(19):
+        a[i][j] = x[j]
