@@ -9,7 +9,6 @@ gild.sort()
 group = []
 for i in gild:
     group.append(i)
-    print(group)
     if i == len(group):
         ans += 1
         group.clear()
