@@ -4,23 +4,29 @@
 
 ### 실수 입력받아 원하는 소수점까지 출력
 
+``` python
 a = float(input())
 
 print('%.2f' % a)
+```
 
 
 
 ### print() 속성 'sep=' 사용시 출력값 사이에 특정 문자 넣어 구분 가능
 
+``` python
 print(5, 9, sep=":")
+```
 
 
 
 ### 원하는 길이만큼 출력(공백 0으로 채움)
 
+``` python
 y, m, d = map(int, input().split("."))
 
 print('%04d' %y, '%02d' %m, '%02d' %d, sep=".")
+```
 
 
 
@@ -28,42 +34,51 @@ print('%04d' %y, '%02d' %m, '%02d' %d, sep=".")
 
 #### format 이용
 
+``` python
 a = format(int(input()), 'o') # 'b' 'o' 'x'
 
 print(a)
+```
 
 
 
 #### print로 바로 출력
 
+``` python
 a = int(input())
 
 print('%x' %a) # '%X' 대문자 사용시 대문자로 출력
+```
 
 
 
 #### 입력받은 진수와 다른 진수로 출력
 
+``` python
 a = input()
 
 n = int(a,16) # a를 16진수로 반꾼 값을 10진수로 변경해서 저장
 
 print("%o" % n) # n을 8진수로 출력
+```
 
 
 
 ### ord() 문자의 아스키 코드 값을 반환(영문자 -> 아스키 10진수)
 
+```python
 a = input()
 
 n = ord(a)
 
 print(n)
+```
 
 
 
 ### 10진수 -> 아스키 문자
 
+``` python
 a = input()
 
 n = int(a)
@@ -71,6 +86,7 @@ n = int(a)
 c = chr(n)
 
 print(c)
+```
 
 
 
@@ -80,34 +96,56 @@ print(c)
 
 ### 2차원 배열에 값 입력 받기
 
+``` python
 a = [[0]*19 for i in range(19)]
 
 for i in range(19):
     x = list(map(int, input().split()))
     for j in range(19):
         a[i][j] = x[j]
+```
 
 
 
 ### 문자열 철자 하나씩 나누기
 
+``` python
 s = "hello"
-
 print(s)
 
-
-
-결과 > 'h', 'e', 'l', 'l', 'o'
+# 결과
+ 'h', 'e', 'l', 'l', 'o'
+```
 
 
 
 ### list내에서 특정 문자의 인덱스 찾기
 
+``` python
 s = ['a', 'b']
 
 idx = s.index('a')
 
-실행시 idx = 0 반환
+# 실행시 idx = 0 반환
+```
+
+
+
+### join()
+
+> 리스트에 특정 구분자를 추가하여 문자열로 변환함
+
+
+
+```python
+lst = ['a', 'b', 'c']
+print( ",".join(lst) )
+print(''.join(lst))
+
+# 결과
+a,b,c
+abc
+```
 
 ----
 
