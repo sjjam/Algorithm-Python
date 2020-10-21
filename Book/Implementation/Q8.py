@@ -1,24 +1,24 @@
 # 문자열 재정렬
 
-# n = input()
+n = input()
 
-# length = len(n)
-# alpha = []
-# num = 0
-# for i in range(length):
-#     if n[i].isalpha():
-#         alpha.append(n[i])
-#     else:
-#         num += int(n[i])
+length = len(n)
+alpha = []
+num = 0
+for i in range(length):
+    if n[i].isalpha():
+        alpha.append(n[i])
+    else:
+        num += int(n[i])
 
-# alpha.sort()
+alpha.sort()
 
-# ans = ''
-# for i in alpha:
-#     ans += i
-# if num != 0:
-#     ans += str(num)
-# print(ans)
+ans = ''
+for i in alpha:
+    ans += i
+if num != 0:
+    ans += str(num)
+print(ans)
 
 
 # 풀이
