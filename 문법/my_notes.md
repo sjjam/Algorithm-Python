@@ -147,6 +147,34 @@ a,b,c
 abc
 ```
 
+
+
+
+
+### 배열 인덱스 - 순환 / +순환
+
+``` python
+seat = [0, 1, 2, 3, 4]
+idx = 1 # 현대 인덱스
+idx -= 20 # 인덱스 -20만큼
+
+num = len(seat)
+if idx >= num:
+    k = idx % num
+    idx = k
+elif idx < 0:
+    k = (-idx) // num + 1
+    idx += num * k
+    if idx == num:
+        idx = 0
+
+print(idx)
+```
+
+
+
+
+
 ----
 
 
