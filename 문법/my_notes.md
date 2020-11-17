@@ -1294,3 +1294,386 @@ for a in range(1, n + 1):
 7 11 2 0
 ```
 
+
+
+---
+
+
+
+## Graph
+
+> 코딩 테스트에서 자주 등장하는 기타 그래프 이론
+
+
+
+**앞서 배운 내용**
+
+- 그래프(Graph)란 노드(Node)와 노드 사이에 연결된 간선(Edge)의 정보를 가지고 있는 자료구조를 의미한다. '서로 다른 개체(혹은 객체)가 연결되어 있다'는 이야기를 들으면 그래프 알고리즘을 떠올려야 한다.
+
+- 트리(Tree) 자료 구조는 부모에서 자식으로 내려오는 계층적인 모델에 속한다.
+
+- 그래프의 구현 방법
+  - 인접 행렬(Adjacency Matrix) : 2차원 배열을 사용하는 방식
+
+  - 인전 리스트(Adjacency List) : 리스트를 사용하는 방식
+
+
+
+### 서로소 집합
+
+- 수학에서 서로소 집합(Disjoint Sets)이란 공통 원소가 없는 두 집합을 의미한다.
+- 서로서 집합 자료구조란 서로소 부분 집합들로 나누어진 원소들의 데이터를 처리하기 위한 자료구조라고 할 수 있다.
+- 서로소 집합 자료구조는 union과 find 2개의 연산으로 조작할 수 있다.
+  - union(합집합) 연산은 2개의 원소가 포함된 집합을 하나의 집합으로 합치는 연산
+  - find(찾기) 연산은 특정한 원소가 속한 집합이 어떤 집합인지 알려주는 연산
+- 서로소 집합 자료구조는 union-find 자료구조라고 불리기도 한다.
+
+
+
+**서로소 집합 자료구조**
+
+- 서로소 집합 자료구조를 구현할 때는 트리 자료구조를 이용하여 집합을 표현하는데, 서로소 집합 정보(합집합 연산)가 주어졌을 때 트리 자료구조를 이용해서 집합을 표현하는 서로소 집합 계산 알고리즘은 다음과 같다.
+  - 1. union 연산을 확인하여, 서로 연결된 두 노드 A, B를 확인한다.
+       1. A와 B의 루트 노드 A', B'를 각각 찾는다.
+       2. A'를 B'의 부모 노드로 설정한다(B'가 A'를 가리키도록 한다.)
+    2. 모든 union 연산을 처리할 때까지 1번 과정을 반복한다.
+  - 실제로 구현할 때는 A'와 B' 중에서 더 번호가 작은 원소가 부모 노드가 되도록 구현하는 경우가 많다.
+  - 루트를 찾기 위해서는 재귀적으로 부모를 거슬러 올라가야 한다.
+
+```python
+# 기본적인 서로소 집합 알고리즘 소스코드
+
+# 특정 원소가 속한 집합을 찾기
+def find_parent(parent, x):
+    if parent[x] != x:
+        return find_parent(parent, parent[x])
+    return x
+
+# 두 원소가 속한 집합을 합치기
+def union_parent(parent, a, b):
+    a = find_parent(parent, a)
+    b = find_parent(parent, b)
+    if a < b:
+        parent[b] = a
+    else:
+        parent[a] = b
+
+# 노드의 개수와 간선(union 연산)의 개수 입력받기
+v, e = map(int, input().split())
+parent = [0] * (v + 1)
+
+# 부모 테이블에서 부모를 자기 자신으로 초기화
+for i in range(1, v + 1):
+    parent[i] = i
+
+# union 연산을 각각 수행
+for i in range(e):
+    a, b = map(int, input().split())
+    union_parent(parent, a, b)
+
+# 각 원소가 속한 집합 출력
+print('각 원소가 속한 집합: ', end='')
+for i in range(1, v + 1):
+    print(find_parent(parent, i), end=' ')
+
+print()
+
+# 부모 테이블 내용 출력
+print('부모 테이블: ', end='')
+for i in range(1, v + 1):
+    print(parent[i], end=' ')
+
+# 입력
+6 4
+1 4
+2 3
+2 4
+5 6
+# 출력
+각 원소가 속한 집합: 1 1 1 1 5 5 
+부모 테이블: 1 1 2 1 5 5
+```
+
+- 이렇게 구현하면 답을 구할 수는 잇지만, find 함수가 비효율적으로 동작한다. 최악의 경우 find 함수가 모든 노드를 다 확인해 시간 복잡도가 O(V)이다.
+- 노드 개수가 V개이고 find 혹은 union 연산의 개수가 M개일 때, 전체 시간 복잡도는 O(VM)이 되어 비효율적이다.
+- 이는 경로 압축(Path Compression) 기법을 적용하면 시간 복잡도를 개선시킬 수 있다. 경로 압축은 find 함수를 재귀적으로 호출한 뒤에 부모 테이블값을 갱신하는 기법이다.
+
+```python
+# 경로 압축 기법 소스코드
+def find_parent2(parent, x):
+    if parent[x] != x:
+        parent[x] = find_parent(parent, parent[x])
+    return parent[x]
+```
+
+- 루트 노드에 더욱 빠르게 접근할 수 있다는 점에서 기존의 알고리즘과 비교했을 때 시간 복잡도가 개선된다.
+
+```python
+# 개선된 서로소 집합 알고리즘 소스코드
+
+# 경로 압축 기법 소스코드
+def find_parent(parent, x):
+    if parent[x] != x:
+        parent[x] = find_parent(parent, parent[x])
+    return parent[x]
+
+def union_parent(parent, a, b):
+    a = find_parent(parent, a)
+    b = find_parent(parent, b)
+    if a < b:
+        parent[b] = a
+    else:
+        parent[a] = b
+
+v, e = map(int, input().split())
+parent = [0] * (v + 1)
+
+for i in range(1, v + 1):
+    parent[i] = i
+
+for i in range(e):
+    a, b = map(int, input().split())
+    union_parent(parent, a, b)
+
+print('각 원소가 속한 집합: ', end='')
+for i in range(1, v + 1):
+    print(find_parent(parent, i), end=' ')
+
+print()
+
+print('부모 테이블: ', end='')
+for i in range(1, v + 1):
+    print(parent[i], end=' ')
+
+# 입력
+6 4
+1 4
+2 3
+2 4
+5 6
+# 출력
+각 원소가 속한 집합: 1 1 1 1 5 5 
+부모 테이블: 1 1 1 1 5 5
+```
+
+
+
+- 서로소 집합 알고리즘의 시간 복잡도
+  - 경로 압축 방법만을 이용할 경우 노드의 개수 V개, 최대 V - 1개의 union 연산과 M개의 find 연산이 가능할 때 경로 압축 방법을 적용한 시간 복잡도는 O(V + M(1 + log<sub>2-M/V</sub>V)) 이다.
+
+
+
+**서로소 집합을 이요한 사이클 판별**
+
+- 서로소 집합은 무방향 그래프 내에서의 사이클을 판별할 때 사용할 수 있다는 특징이 있다. 참고로 방향 그래프에서의 사이클 여부는 DFS를 이용하여 판별할 수 있다.
+- union 연산은 그래프에서의 간선으로 표현될 수 있다고 했다. 따라서 간선을 하나씩 확인하면서 두 노드가 포함되어 있는 집합을 합치는 과정을 반복하는 것만으로도 사이클을 판별할 수 있다.
+  - 1. 각 간선을 확인하며 두 노드의 루트 노드를 확인한다.
+       1. 루트 노드가 서로 다르다면 두 노드에 대하여 union 연산을 수행한다.
+       2. 루트 노드가 서로 같다면 사이클(Cycle)이 발생한 것이다.
+    2. 그래프에 포함되어 있는 모든 간선에 대하여 1번 과정을 반복한다.
+
+- 이러한 사이클 판별 알고리즘은 그래프에 포함되어 있는 간선의 개수가 E개일 때 모든 간선을 하나씩 확인하며, 매 간선에 대하여 union 및 find 함수를 호출하는 방식으로 동작한다.
+
+```python
+# 서로소 집합을 활용한 사이클 판별 소스코드
+
+def find_parent(parent, x):
+    if parent[x] != x:
+        parent[x] = find_parent(parent, parent[x])
+    return parent[x]
+
+def union_parent(parent, a, b):
+    a = find_parent(parent, a)
+    b = find_parent(parent, b)
+    if a < b:
+        parent[b] = a
+    else:
+        parent[a] = b
+
+v, e = map(int, input().split())
+parent = [0] * (v + 1)
+
+for i in range(1, v + 1):
+    parent[i] = i
+
+cycle = False
+
+for i in range(e):
+    a, b = map(int, input().split())
+    if find_parent(parent, a) == find_parent(parent, b):
+        cycle = True
+        break
+    else:
+        union_parent(parent, a, b)
+
+if cycle:
+    print("사이클이 발생했습니다.")
+else:
+    print("사이클이 발생하지 않았습니다.")
+    
+
+# 입력
+3 3
+1 2
+1 3
+2 3
+# 출력
+사이클이 발생했습니다.
+```
+
+
+
+
+
+### 신장 트리
+
+- 신장 트리(Spanning Tree)란 하나의 그래프가 있을 때 모든 노드를 포함하면서 사이클이 존재하지 않는 부분 그래프를 의미한다.
+- 모든 노드가 포함되어 서로 연결되면서 사이클이 존재하지 않는다는 조건은 트리의 성립 조건이기도 하다.
+
+
+
+**크루스칼 알고리즘**
+
+- 신장 트리 중에서 최소 비용으로 만들 수 있는 신장 트리를 찾는 알고리즘을 '최소 신장 트리 알고리즘'이라고 한다. 대표적인 최소 신장 트리 알고리즘으로는 크루스칼(Kruskal Algorithm)이 있다.
+- 크루스칼 알고리즘을 사용하면 가장 적은 비용으로 모든 노드를 연결할 수 있는데 크루스칼 알고리즘은 그리디 알고리즘으로 분류된다.
+- 먼저 모든 간선에 대하여 정렬을 수행한 뒤에 가장 거리가 짧은 간선부터 집합에 포함시키면 된다.
+- 이때, 사이클을 발생시킬 수 있는 간선의 경우, 집합에 포함시키지 않는다.
+  - 1. 간선 데이터를 비용에 따라 오름차순으로 정렬한다.
+    2. 간선을 하나씩 확인하며 현재의 간선이 사이클을 발생시키는지 확인한다.
+       1. 사이클이 발생하지 않는 경우 최소 신장 트리에 포함시킨다.
+       2. 사이클이 발생하는 경우 최소 신장 트리에 포함시키지 않는다.
+    3. 모든 간선에 대하여 2번의 과정을 반복한다.
+- 최소 신장 트리는 일종의 트리 자료구조이므로, 최종적으로 신장 트리에 포함되는 간선의 개수가 '노드의 개수 - 1'과 같다는 특징이 있다.
+
+```python
+# 크루스칼 알고리즘 소스코드
+
+def find_parent(parent, x):
+    if parent[x] != x:
+        parent[x] = find_parent(parent, parent[x])
+    return parent[x]
+
+def union_parent(parent, a, b):
+    a = find_parent(parent, a)
+    b = find_parent(parent, b)
+    if a < b:
+        parent[b] = a
+    else:
+        parent[a] = b
+
+v, e = map(int, input().split())
+parent = [0] * (v + 1)
+
+edges = []
+result = 0
+
+for i in range(1, v + 1):
+    parent[i] = i
+
+for _ in range(e):
+    a, b, cost = map(int, input().split())
+    edges.append((cost, a, b))
+
+edges.sort()
+
+for edge in edges:
+    cost, a, b = edge
+    if find_parent(parent, a) != find_parent(parent, b):
+        union_parent(parent, a, b)
+        result += cost
+
+print(result)
+
+# 입력
+7 9
+1 2 29 
+1 5 75
+2 3 35
+2 6 34
+3 4 7
+4 6 23
+4 7 13
+5 6 53
+6 7 25
+# 결과
+159
+```
+
+
+
+- 크루스칼 알고리즘의 시간 복잡도
+  - 간선의 개수가 E개일 떄, O(ElogE)의 시간 복잡도를 가진다. 왜냐하면 크루스칼 알고리즘에서 시간이 가장 오래 걸리는 부분이 간선을 정렬하는 작업이며, E개의 데이터를 정렬했을 때의 시간 복잡도는 O(ElogE)이기 때문이다.
+
+
+
+
+
+### 위상 정렬
+
+- 위상 정렬(Topology Sort)은 정렬 알고리즘의 일종이다.
+- 위상 정렬은 순서가 정해져 있는 일련의 작업을 차례대로 수행해야 할 때 사용할 수 있는 알고리즘이다.
+- 위상 정렬이란 방향 그래프의 모든 노드를 '방향성에 거스르지 않도록 순서대로 나열하는 것'이다.
+- 다시 말해 그래프상에서 선후 관계가 있다면, 위상 정렬을 수행하여 모든 선후 관계를 지키는 전체 순서를 계산할 수 있다.
+- 진입차수(Indegree)
+  - 진입차수란 특정한 노드로 '들아오는' 간선의 개수를 의미한다.
+- 위상 정렬 알고리즘
+  - 1. 진입차수가 0인 노드를 큐에 넣는다.
+    2. 큐가 빌 때까지 다음의 과정을 반복한다.
+       1. 큐에서 원소를 꺼내 해당 노드에서 출발하는 간선을 그래프에서 제거한다.
+       2. 새롭게 진입차수가 0이 된 노드를 큐에 넣는다.
+  - 이때 모든 원소를 방문하기 전에 큐가 빈다면 사이클이 존해단다고 판달할 수 있다.
+  - 위 과정을 수행하는 동안 큐에서 빠져나간 노드를 순서대로 출력하면, 그것이 바로 위상 정렬을 수행한 결과가 된다.
+  - 위상 정렬의 답안은 여러 가지가 될 수 있다는 점이 특징이다. 한 단계에서 큐에 새롭게 들어가는 원소가 2개 이상인 경우
+
+```python
+from collections import deque
+
+v, e = map(int, input().split())
+indegree = [0] * (v + 1)
+graph = [[] for i in range(v + 1)]
+
+for _ in range(e):
+    a, b = map(int, input().split())
+    graph[a].append(b)
+    indegree[b] += 1
+
+def topology_sort():
+    result = []
+    q = deque()
+
+    for i in range(1, v + 1):
+        if indegree[i] == 0:
+            q.append(i)
+
+    while q:
+        now = q.popleft()
+        result.append(now)
+
+        for i in graph[now]:
+            indegree[i] -= 1
+            if indegree[i] == 0:
+                q.append(i)
+
+    for i in result:
+        print(i, end=' ')
+
+topology_sort()
+
+# 입력
+7 8
+1 2
+1 5
+2 3
+2 6
+3 4
+4 7
+5 6
+6 4
+# 결과
+1 2 5 3 6 4 7
+```
+
+
+
+- 위상 정렬의 시간 복잡도
+  - 위상 정렬의 시간 복잡도는 O(V + E)이다. 노드와 간선을 모두 확인한다는 측면에서 O(V + E)의 시간이 소요되는 것이다.
