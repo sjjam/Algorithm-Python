@@ -4,7 +4,6 @@
 
 
 
-
 # 풀이
 
 def find_parent(parent, x):
