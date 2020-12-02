@@ -175,6 +175,19 @@ print(idx)
 
 
 
+### 크기가 4인 배열 +/- 순환
+
+```python
+# 왼쪽
+	direction = (direction - 1) % 4
+# 오른쪽
+    direction = (direction + 1) % 4
+```
+
+
+
+
+
 ----
 
 
