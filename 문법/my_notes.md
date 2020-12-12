@@ -188,6 +188,41 @@ print(idx)
 
 
 
+### 2차원 리스트 슬라이싱
+
+```python
+data = [[0] * 3 for _ in range(4)]
+n = 1
+for i in range(4):
+    for j in range(3):
+        data[i][j] = n
+        n += 1
+        print(data[i][j], end=' ')
+    print()
+# 가로
+print(data[2][1:])
+# 세로
+for i in range(1, 3):
+    print(data[i][1:3])
+
+# 결과
+1 2 3 
+4 5 6 
+7 8 9
+10 11 12
+[8, 9]
+[5, 6]
+[8, 9]
+
+# numpy 라이브러리가 사용 가능할 경우 더 쉽게 표현 가능
+```
+
+
+
+
+
+
+
 ----
 
 
