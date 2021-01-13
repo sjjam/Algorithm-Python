@@ -36,18 +36,37 @@
 # 3-4
 # r1
 
-n, k = map(int, input().split())
+# n, k = map(int, input().split())
+# ans = 0
+
+# while n >= k:
+#     while n % k != 0:
+#         n -= 1
+#         ans += 1
+#     n //= k
+#     ans += 1
+
+# while n > 1:
+#     n -= 1
+#     ans += 1
+
+# print(ans)
+
+
+
+# 모험가 길드
+# r1
+
+n = int(input())
+data = list(map(int, input().split()))
+data.sort()
+
 ans = 0
-
-while n >= k:
-    while n % k != 0:
-        n -= 1
+group = []
+for i in data:
+    group.append(i)
+    if i <= len(group):
         ans += 1
-    n //= k
-    ans += 1
-
-while n > 1:
-    n -= 1
-    ans += 1
+        group.clear()
 
 print(ans)
