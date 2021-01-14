@@ -221,6 +221,36 @@ for i in range(1, 3):
 
 
 
+### 반복문에서 리스트 remove시 요소 건너뛰는 상황
+
+```python
+lst = [1, 2, 3, 4, 5, 6, 7, 8] 
+
+for x in lst : 
+    if x < 6 : 
+        lst.remove(x)
+
+print(lst)
+# 결과
+[2, 4, 6, 7, 8]
+
+# 방법 1
+# 필터링
+a = [x for x in lst if x >= 6]
+print(a)
+
+# 결과
+[6, 7, 8]
+
+# 방법 2
+# 역순
+for x in reversed(lst): 
+    if x < 6 : 
+        lst.remove(x)
+```
+
+
+
 
 
 ----
