@@ -57,16 +57,56 @@
 # 모험가 길드
 # r1
 
-n = int(input())
-data = list(map(int, input().split()))
-data.sort()
+# n = int(input())
+# data = list(map(int, input().split()))
+# data.sort()
 
-ans = 0
-group = []
-for i in data:
-    group.append(i)
-    if i <= len(group):
-        ans += 1
-        group.clear()
+# ans = 0
+# group = []
+# for i in data:
+#     group.append(i)
+#     if i <= len(group):
+#         ans += 1
+#         group.clear()
 
-print(ans)
+# print(ans)
+
+
+
+# 곱하기 혹은 더하기
+# r1
+
+# s = input()
+# result = int(s[0])
+
+# for i in range(1, len(s)):
+#     if result <= 1 or int(s[i]) <= 1:
+#         result += int(s[i])
+#     else:
+#         result *= int(s[i])
+
+# print(result)
+
+
+
+# 문자열 뒤집기
+# r1
+# https://www.acmicpc.net/problem/1439
+
+s = input()
+zero = 0
+one = 0
+
+if s[0] == '1':
+    zero += 1
+else:
+    one += 1
+
+for i in range(len(s) - 1):
+    if s[i] != s[i + 1]:
+        if s[i + 1] == '1':
+            zero += 1
+        else:
+            one += 1
+
+print(min(zero, one))
