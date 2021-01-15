@@ -93,20 +93,70 @@
 # r1
 # https://www.acmicpc.net/problem/1439
 
-s = input()
-zero = 0
-one = 0
+# s = input()
+# zero = 0
+# one = 0
 
-if s[0] == '1':
-    zero += 1
-else:
-    one += 1
+# if s[0] == '1':
+#     zero += 1
+# else:
+#     one += 1
 
-for i in range(len(s) - 1):
-    if s[i] != s[i + 1]:
-        if s[i + 1] == '1':
-            zero += 1
-        else:
-            one += 1
+# for i in range(len(s) - 1):
+#     if s[i] != s[i + 1]:
+#         if s[i + 1] == '1':
+#             zero += 1
+#         else:
+#             one += 1
 
-print(min(zero, one))
+# print(min(zero, one))
+
+
+
+# 만들 수 없는 금액
+# r1
+
+# from itertools import combinations
+
+# n = int(input())
+# data = list(map(int, input().split()))
+# d = [0] * (sum(data) + 1)
+
+# for i in range(1, len(data) + 1):
+#     s_list = list(combinations(data, i))
+#     for j in s_list:
+#         if d[sum(j)] == 0:
+#             d[sum(j)] = sum(j)
+
+# for i in range(1, len(d)):
+#     if d[i] == 0:
+#         print(i)
+#         break
+'''
+'''
+# n = int(input())
+# data = list(map(int, input().split()))
+# data.sort()
+
+# min_n = 1
+# for i in data:
+#     if min_n < i:
+#         break
+#     min_n += i
+
+# print(min_n)
+
+
+# 볼링공 고르기
+# r1
+
+n, m = map(int, input().split())
+data = list(map(int, input().split()))
+
+ans = 0
+for i in range(len(data) - 1):
+    for j in range(i + 1, len(data)):
+        if data[i] != data[j]:
+            ans += 1
+
+print(ans)
