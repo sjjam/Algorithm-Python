@@ -172,25 +172,72 @@
 # r1
 # https://programmers.co.kr/learn/courses/30/lessons/60057
 
-def solution(s):
-    answer = 0
-    length = len(s) // 2
-    min_l = len(s)
+# def solution(s):
+#     answer = 0
+#     length = len(s) // 2
+#     min_l = len(s)
 
-    for i in range(1, length + 1):
-        tmp = ''
-        cnt = 1
-        for j in range(0, len(s), i):
-            if s[j:j + i] == s[j + i:j + i + i]:
-                cnt += 1
-            else:
-                if cnt == 1:
-                    tmp += s[j:j + i]
-                else:
-                    tmp += str(cnt) + s[j:j + i]
-                    cnt = 1
-        if len(tmp) < min_l:
-            min_l = len(tmp)
+#     for i in range(1, length + 1):
+#         tmp = ''
+#         cnt = 1
+#         for j in range(0, len(s), i):
+#             if s[j:j + i] == s[j + i:j + i + i]:
+#                 cnt += 1
+#             else:
+#                 if cnt == 1:
+#                     tmp += s[j:j + i]
+#                 else:
+#                     tmp += str(cnt) + s[j:j + i]
+#                     cnt = 1
+#         if len(tmp) < min_l:
+#             min_l = len(tmp)
     
-    answer = min_l
-    return answer
+#     answer = min_l
+#     return answer
+
+
+
+# 자물쇠와 열쇠
+# r1 x
+# https://programmers.co.kr/learn/courses/30/lessons/60059
+
+def rotate_a_matrix_by_90_degree(a):
+    n = len(a)
+    m = len(a[0])
+    result = [[0] * n for _ in range(m)]
+    for i in range(n):
+        for j in range(m):
+            result[j][n - i - 1] = a[i][j]
+    return result
+
+def check(new_lock):
+    lock_length = len(new_lock) // 3
+    for i in range(lock_length, lock_length * 2):
+        for j in range(lock_length, lock_length * 2):
+            if new_lock[i][j] != 1:
+                return False
+    return True
+
+def solution(key, lock):
+    n = len(lock)
+    m = len(key)
+    new_lock = [[0] * (n * 3) for _ in range(n * 3)]
+
+    for i in range(n):
+        for j in range(n):
+            new_lock[i + n][j + n] = lock[i][j]
+    
+    for rotation in range(4):
+        key = rotate_a_matrix_by_90_degree(key)
+        for x in range(n * 2):
+            for y in range(n * 2):
+                for i in range(m):
+                    for j in range(m):
+                        new_lock[x + i][y + j] += key[i][j]
+                
+                if check(new_lock) == True:
+                    return True
+                for i in range(m):
+                    for j in range(m):
+                        new_lock[x + i][y + j] -= key[i][j]
+    return False
