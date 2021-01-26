@@ -248,115 +248,181 @@
 # r1 x
 # https://www.acmicpc.net/problem/3190
 
-from collections import deque
+# from collections import deque
 
-n = int(input())
-k = int(input())
-arr = [[0] * n for _ in range(n)]
-for _ in range(k):
-    a, b = map(int, input().split())
-    arr[a - 1][b - 1] = 2
-l = int(input())
-change = []
-for _ in range(l):
-    x, d = input().split()
-    change.append((x, d))
+# n = int(input())
+# k = int(input())
+# arr = [[0] * n for _ in range(n)]
+# for _ in range(k):
+#     a, b = map(int, input().split())
+#     arr[a - 1][b - 1] = 2
+# l = int(input())
+# change = []
+# for _ in range(l):
+#     x, d = input().split()
+#     change.append((x, d))
 
-dx = [0, 1, 0, -1]
-dy = [1, 0, -1, 0]
-idx = 0
-snake = deque()
-snake.append([0, 0])
-arr[0][0] = 1
-time = 0
+# dx = [0, 1, 0, -1]
+# dy = [1, 0, -1, 0]
+# idx = 0
+# snake = deque()
+# snake.append([0, 0])
+# arr[0][0] = 1
+# time = 0
 
-while True:
-    x, y = snake.pop()
-    nx = x + dx[idx]
-    ny = y + dy[idx]
+# while True:
+#     x, y = snake.pop()
+#     nx = x + dx[idx]
+#     ny = y + dy[idx]
 
-    if nx < 0 or nx >= n or ny < 0 or ny >= n:
-        time += 1
-        break
-    if arr[nx][ny] == 1:
-        time += 1
-        break
+#     if nx < 0 or nx >= n or ny < 0 or ny >= n:
+#         time += 1
+#         break
+#     if arr[nx][ny] == 1:
+#         time += 1
+#         break
     
-    if arr[nx][ny] == 0:
-        arr[nx][ny] = 1
-        snake.append([x, y])
-        snake.append([nx, ny])
-        px, py = snake.popleft()
-        arr[px][py] = 0
-    if arr[nx][ny] == 2:
-        arr[nx][ny] = 1
-        snake.append([x, y])
-        snake.append([nx, ny])
+#     if arr[nx][ny] == 0:
+#         arr[nx][ny] = 1
+#         snake.append([x, y])
+#         snake.append([nx, ny])
+#         px, py = snake.popleft()
+#         arr[px][py] = 0
+#     if arr[nx][ny] == 2:
+#         arr[nx][ny] = 1
+#         snake.append([x, y])
+#         snake.append([nx, ny])
 
-    time += 1
-    for x, d in change:
-        if int(x) == time:
-            if d == 'D':
-                idx = (idx + 1) % 4
-            elif d == 'L':
-                idx = (idx - 1) % 4
+#     time += 1
+#     for x, d in change:
+#         if int(x) == time:
+#             if d == 'D':
+#                 idx = (idx + 1) % 4
+#             elif d == 'L':
+#                 idx = (idx - 1) % 4
 
-print(time)
+# print(time)
 
-n = int(input())
-k = int(input())
-data = [[0] * (n + 1) for _ in range(n + 1)]
-info = []
+# n = int(input())
+# k = int(input())
+# data = [[0] * (n + 1) for _ in range(n + 1)]
+# info = []
 
-for _ in range(k):
-    a, b = map(int, input().split())
-    data[a][b] = 1
+# for _ in range(k):
+#     a, b = map(int, input().split())
+#     data[a][b] = 1
 
-l = int(input())
-for _ in range(l):
-    x, c = input().split()
-    info.append((int(x), c))
+# l = int(input())
+# for _ in range(l):
+#     x, c = input().split()
+#     info.append((int(x), c))
 
-dx = [0, 1, 0, -1]
-dy = [1, 0, -1, 0]
+# dx = [0, 1, 0, -1]
+# dy = [1, 0, -1, 0]
 
-def turn(direction, c):
-    if c == 'L':
-        direction = (direction - 1) % 4
-    else:
-        direction = (direction + 1) % 4
-    return direction
+# def turn(direction, c):
+#     if c == 'L':
+#         direction = (direction - 1) % 4
+#     else:
+#         direction = (direction + 1) % 4
+#     return direction
 
-def simulate():
-    x, y = 1, 1
-    data[x][y] = 2
-    direction = 0
-    time = 0
-    index = 0
-    q = [(x, y)]
-    while True:
-        nx = x + dx[direction]
-        ny = y + dy[direction]
+# def simulate():
+#     x, y = 1, 1
+#     data[x][y] = 2
+#     direction = 0
+#     time = 0
+#     index = 0
+#     q = [(x, y)]
+#     while True:
+#         nx = x + dx[direction]
+#         ny = y + dy[direction]
 
-        if 1 <= nx and nx <= n and 1 <= ny and ny <= n and data[nx][ny] != 2:
-            if data[nx][ny] == 0:
-                data[nx][ny] = 2
-                q.append((nx, ny))
-                px, py = q.pop(0)
-                data[px][py] = 0
+#         if 1 <= nx and nx <= n and 1 <= ny and ny <= n and data[nx][ny] != 2:
+#             if data[nx][ny] == 0:
+#                 data[nx][ny] = 2
+#                 q.append((nx, ny))
+#                 px, py = q.pop(0)
+#                 data[px][py] = 0
             
-            if data[nx][ny] == 1:
-                data[nx][ny] = 2
-                q.append((nx, ny))
-        else:
-            time += 1
-            break
+#             if data[nx][ny] == 1:
+#                 data[nx][ny] = 2
+#                 q.append((nx, ny))
+#         else:
+#             time += 1
+#             break
 
-        x, y = nx, ny
-        time += 1
-        if index < l and time == info[index][0]:
-            direction = turn(direction, info[index][1])
-            index += 1
-    return time
+#         x, y = nx, ny
+#         time += 1
+#         if index < l and time == info[index][0]:
+#             direction = turn(direction, info[index][1])
+#             index += 1
+#     return time
 
-print(simulate())
+# print(simulate())
+
+
+
+# 기둥과 보 설치
+# r1
+# https://programmers.co.kr/learn/courses/30/lessons/60061
+
+# def check(answer, x, y, a):
+#     if a == 0:
+#         if y == 0 or [x - 1, y, 1] in answer or [x, y, 1] in answer or [x, y - 1, 0] in answer:
+#             return True
+#     elif a == 1:
+#         if [x, y - 1, 0] in answer or [x + 1, y - 1, 0] in answer or [x - 1, y, 1] in answer and [x + 1, y, 1] in answer:
+#             return True
+#     return False
+
+# def solution(n, build_frame):
+#     answer = []
+#     for i in build_frame:
+#         x, y, a, b = i
+#         if b == 1:
+#             if check(answer, x, y, a):
+#                 answer.append([x, y, a])
+#         else:
+#             answer.remove([x, y, a])
+#             for j in answer:
+#                 jx, jy, ja = j
+#                 if not check(answer, jx, jy, ja):
+#                     answer.append([x, y, a])
+#                     break
+            
+#     answer.sort()
+#     return answer
+
+
+
+# 치킨 배달
+# r1
+# https://www.acmicpc.net/problem/15686
+
+from itertools import combinations
+
+n, m = map(int, input().split())
+chicken = []
+home = []
+for i in range(n):
+    data = list(map(int, input().split()))
+    for j in range(len(data)):
+        if data[j] == 2:
+            chicken.append((i, j))
+        elif data[j] == 1:
+            home.append((i, j))
+
+choose = list(combinations(chicken, m))
+ans = 1e9
+
+for i in choose:
+    result = 0
+    for j in home:
+        dis = n + n
+        for k in i:
+            dis = min(dis, abs(j[0] - k[0]) + abs(j[1] - k[1]))
+        result += dis
+    ans = min(ans, result)
+
+print(ans)
