@@ -400,29 +400,60 @@
 # r1
 # https://www.acmicpc.net/problem/15686
 
-from itertools import combinations
+# from itertools import combinations
 
-n, m = map(int, input().split())
-chicken = []
-home = []
-for i in range(n):
-    data = list(map(int, input().split()))
-    for j in range(len(data)):
-        if data[j] == 2:
-            chicken.append((i, j))
-        elif data[j] == 1:
-            home.append((i, j))
+# n, m = map(int, input().split())
+# chicken = []
+# home = []
+# for i in range(n):
+#     data = list(map(int, input().split()))
+#     for j in range(len(data)):
+#         if data[j] == 2:
+#             chicken.append((i, j))
+#         elif data[j] == 1:
+#             home.append((i, j))
 
-choose = list(combinations(chicken, m))
-ans = 1e9
+# choose = list(combinations(chicken, m))
+# ans = 1e9
 
-for i in choose:
-    result = 0
-    for j in home:
-        dis = n + n
-        for k in i:
-            dis = min(dis, abs(j[0] - k[0]) + abs(j[1] - k[1]))
-        result += dis
-    ans = min(ans, result)
+# for i in choose:
+#     result = 0
+#     for j in home:
+#         dis = n + n
+#         for k in i:
+#             dis = min(dis, abs(j[0] - k[0]) + abs(j[1] - k[1]))
+#         result += dis
+#     ans = min(ans, result)
 
-print(ans)
+# print(ans)
+
+
+
+# 외벽 점검
+# r1 x
+# https://programmers.co.kr/learn/courses/30/lessons/60062
+
+from itertools import permutations
+
+def solution(n, weak, dist):
+    length = len(weak)
+    for i in range(length):
+        weak.append(weak[i] + n)
+    answer = len(dist) + 1
+
+    for start in range(length):
+        for friends in list(permutations(dist, len(dist))):
+            count = 1
+            position = weak[start] + friends[count - 1]
+            for index in range(start, start + length):
+                if position < weak[index]:
+                    count += 1
+                    if count > len(dist):
+                        break
+                    position = weak[index] + friends[count - 1]
+            answer = min(answer, count)
+    if answer > len(dist):
+        return -1
+    return answer
+
+print(solution(12, [1, 5, 6, 10], [1, 2, 3, 4]))
