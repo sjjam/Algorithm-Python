@@ -204,39 +204,86 @@
 # r1 x
 # https://www.acmicpc.net/problem/18405
 
-from collections import deque
+# from collections import deque
 
-n, k = map(int, input().split())
+# n, k = map(int, input().split())
 
-graph = []
-data = []
+# graph = []
+# data = []
 
-for i in range(n):
-    graph.append(list(map(int, input().split())))
-    for j in range(n):
-        if graph[i][j] != 0:
-            data.append((graph[i][j], 0, i, j))
+# for i in range(n):
+#     graph.append(list(map(int, input().split())))
+#     for j in range(n):
+#         if graph[i][j] != 0:
+#             data.append((graph[i][j], 0, i, j))
 
-data.sort()
-q = deque(data)
+# data.sort()
+# q = deque(data)
 
-target_s, target_x, target_y = map(int, input().split())
+# target_s, target_x, target_y = map(int, input().split())
 
-dx = [-1, 0, 1, 0]
-dy = [0, 1, 0, -1]
+# dx = [-1, 0, 1, 0]
+# dy = [0, 1, 0, -1]
 
-while q:
-    virus, s, x, y = q.popleft()
-    if s == target_s:
-        break
+# while q:
+#     virus, s, x, y = q.popleft()
+#     if s == target_s:
+#         break
 
-    for i in range(4):
-        nx = x + dx[i]
-        ny = y + dy[i]
+#     for i in range(4):
+#         nx = x + dx[i]
+#         ny = y + dy[i]
 
-        if 0 <= nx and nx < n and 0 <= ny and ny < n:
-            if graph[nx][ny] == 0:
-                graph[nx][ny] = virus
-                q.append((virus, s + 1, nx, ny))
+#         if 0 <= nx and nx < n and 0 <= ny and ny < n:
+#             if graph[nx][ny] == 0:
+#                 graph[nx][ny] = virus
+#                 q.append((virus, s + 1, nx, ny))
 
-print(graph[target_x - 1][target_y - 1])
+# print(graph[target_x - 1][target_y - 1])
+
+
+
+# 괄호 변환
+# r1
+# https://programmers.co.kr/learn/courses/30/lessons/60058
+
+def step(p):
+    u = ''
+    v = ''
+    cnt_l = 0
+    cnt_r = 0
+    for i in range(len(p)):
+        if p[i] == '(':
+            cnt_l += 1
+        else:
+            cnt_r += 1
+        if cnt_l != 0 and cnt_l == cnt_r:
+            u = p[:i + 1]
+            v = p[i + 1:]
+            break
+
+    if len(u) != 0:
+        if u[0] == '(':
+            u += step(v)
+        else:
+            tmp = '('
+            tmp += step(v)
+            tmp += ')'
+            tmp2 = ''
+            for i in range(1, len(u) - 1):
+                if u[i] == '(':
+                    tmp2 += ')'
+                else:
+                    tmp2 += '('
+            tmp += tmp2
+            return tmp
+    return u
+
+def solution(p):
+    answer = ''
+    if p == '':
+        answer = ''
+    else:
+        answer = step(p)
+
+    return answer
