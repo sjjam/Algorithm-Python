@@ -247,43 +247,84 @@
 # r1
 # https://programmers.co.kr/learn/courses/30/lessons/60058
 
-def step(p):
-    u = ''
-    v = ''
-    cnt_l = 0
-    cnt_r = 0
-    for i in range(len(p)):
-        if p[i] == '(':
-            cnt_l += 1
+# def step(p):
+#     u = ''
+#     v = ''
+#     cnt_l = 0
+#     cnt_r = 0
+#     for i in range(len(p)):
+#         if p[i] == '(':
+#             cnt_l += 1
+#         else:
+#             cnt_r += 1
+#         if cnt_l != 0 and cnt_l == cnt_r:
+#             u = p[:i + 1]
+#             v = p[i + 1:]
+#             break
+
+#     if len(u) != 0:
+#         if u[0] == '(':
+#             u += step(v)
+#         else:
+#             tmp = '('
+#             tmp += step(v)
+#             tmp += ')'
+#             tmp2 = ''
+#             for i in range(1, len(u) - 1):
+#                 if u[i] == '(':
+#                     tmp2 += ')'
+#                 else:
+#                     tmp2 += '('
+#             tmp += tmp2
+#             return tmp
+#     return u
+
+# def solution(p):
+#     answer = ''
+#     if p == '':
+#         answer = ''
+#     else:
+#         answer = step(p)
+
+#     return answer
+
+
+
+# 연산자 끼워넣기
+# r1
+# https://www.acmicpc.net/problem/14888
+
+from itertools import permutations
+
+n = int(input())
+num = list(map(int, input().split()))
+p, s, m, d = map(int, input().split())
+
+cal_s = [('+', p), ('-', s), ('*', m), ('/', d)]
+cal = []
+
+for i in cal_s:
+    if i[1] != 0:
+        for j in range(i[1]):
+            cal.append(i[0])
+
+min_r = 1e9
+max_r = -1e9
+
+for i in list(permutations(cal, len(cal))):
+    result = num[0]
+    for j in range(len(i)):
+        if i[j] == '+':
+            result = result + num[j + 1]
+        elif i[j] == '-':
+            result = result - num[j + 1]
+        elif i[j] == '*':
+            result = result * num[j + 1]
         else:
-            cnt_r += 1
-        if cnt_l != 0 and cnt_l == cnt_r:
-            u = p[:i + 1]
-            v = p[i + 1:]
-            break
+            result = int(result / num[j + 1])
+    
+    min_r = min(min_r, result)
+    max_r = max(max_r, result)
 
-    if len(u) != 0:
-        if u[0] == '(':
-            u += step(v)
-        else:
-            tmp = '('
-            tmp += step(v)
-            tmp += ')'
-            tmp2 = ''
-            for i in range(1, len(u) - 1):
-                if u[i] == '(':
-                    tmp2 += ')'
-                else:
-                    tmp2 += '('
-            tmp += tmp2
-            return tmp
-    return u
-
-def solution(p):
-    answer = ''
-    if p == '':
-        answer = ''
-    else:
-        answer = step(p)
-
-    return answer
+print(max_r)
+print(min_r)
