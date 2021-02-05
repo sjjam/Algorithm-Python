@@ -294,37 +294,155 @@
 # r1
 # https://www.acmicpc.net/problem/14888
 
-from itertools import permutations
+# from itertools import permutations
 
-n = int(input())
-num = list(map(int, input().split()))
-p, s, m, d = map(int, input().split())
+# n = int(input())
+# num = list(map(int, input().split()))
+# p, s, m, d = map(int, input().split())
 
-cal_s = [('+', p), ('-', s), ('*', m), ('/', d)]
-cal = []
+# cal_s = [('+', p), ('-', s), ('*', m), ('/', d)]
+# cal = []
 
-for i in cal_s:
-    if i[1] != 0:
-        for j in range(i[1]):
-            cal.append(i[0])
+# for i in cal_s:
+#     if i[1] != 0:
+#         for j in range(i[1]):
+#             cal.append(i[0])
 
-min_r = 1e9
-max_r = -1e9
+# min_r = 1e9
+# max_r = -1e9
 
-for i in list(permutations(cal, len(cal))):
-    result = num[0]
-    for j in range(len(i)):
-        if i[j] == '+':
-            result = result + num[j + 1]
-        elif i[j] == '-':
-            result = result - num[j + 1]
-        elif i[j] == '*':
-            result = result * num[j + 1]
-        else:
-            result = int(result / num[j + 1])
+# for i in list(permutations(cal, len(cal))):
+#     result = num[0]
+#     for j in range(len(i)):
+#         if i[j] == '+':
+#             result = result + num[j + 1]
+#         elif i[j] == '-':
+#             result = result - num[j + 1]
+#         elif i[j] == '*':
+#             result = result * num[j + 1]
+#         else:
+#             result = int(result / num[j + 1])
     
-    min_r = min(min_r, result)
-    max_r = max(max_r, result)
+#     min_r = min(min_r, result)
+#     max_r = max(max_r, result)
 
-print(max_r)
-print(min_r)
+# print(max_r)
+# print(min_r)
+
+
+
+# 감시 피하기
+# r1
+# https://www.acmicpc.net/problem/18428
+
+# from itertools import combinations
+# import copy
+
+# n = int(input())
+# arr = []
+# void = []
+# t_p = []
+# for i in range(n):
+#     data = list(input().split())
+#     arr.append(data)
+#     for j in range(n):
+#         if data[j] == 'X':
+#             void.append((i, j))
+#         if data[j] == 'T':
+#             t_p.append((i, j))
+
+# def check(tmp):
+#     for t in t_p:
+#         x, y = t
+#         dx = [-1, 0, 1, 0]
+#         dy = [0, -1, 0, 1]
+
+#         for i in range(4):
+#             nx = x
+#             ny = y
+#             while True:
+#                 nx += dx[i]
+#                 ny += dy[i]
+
+#                 if nx < 0 or nx >= n or ny < 0 or ny >= n:
+#                     break
+
+#                 if tmp[nx][ny] == 'O':
+#                     break
+#                 if tmp[nx][ny] == 'S':
+#                     return False
+#     return True
+
+# ans = 'NO'
+
+# for i in list(combinations(void, 3)):
+#     tmp = copy.deepcopy(arr)
+#     for j in i:
+#         tmp[j[0]][j[1]] = 'O'
+
+#     if check(tmp):
+#         ans = 'YES'
+#         break
+
+# print(ans)
+
+
+
+# 인구 이동
+# r1
+# https://www.acmicpc.net/problem/16234
+
+from collections import deque
+
+n, l, r = map(int, input().split())
+arr = []
+for _ in range(n):
+    arr.append(list(map(int, input().split())))
+
+dx = [-1, 0, 1, 0]
+dy = [0, -1, 0, 1]
+
+def bfs(x, y, visited):
+    union = []
+    union.append((x, y))
+    sum_u = arr[x][y]
+    q = deque()
+    q.append((x, y))
+    visited[x][y] = True
+
+    while q:
+        x, y = q.popleft()
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i]
+            
+            if nx >= 0 and nx < n and ny >= 0 and ny < n:
+                if not visited[nx][ny] and l <= abs(arr[x][y] - arr[nx][ny]) and abs(arr[x][y] - arr[nx][ny]) <= r:
+                    q.append((nx, ny))
+                    union.append((nx, ny))
+                    sum_u += arr[nx][ny]
+                    visited[nx][ny] = True
+    return union, sum_u
+
+ans = 0
+
+while True:
+    chk = False
+    visited = [[False] * n for _ in range(n)]
+
+    for i in range(n):
+        for j in range(n):
+            if not visited[i][j]:
+                union, sum_u = bfs(i, j, visited)
+                if len(union) > 1:
+                    chk = True
+                    sum_u = sum_u // len(union)
+                    for k in union:
+                        x, y = k
+                        arr[x][y] = sum_u
+    if chk:
+        ans += 1
+    if not chk:
+        break
+
+print(ans)
