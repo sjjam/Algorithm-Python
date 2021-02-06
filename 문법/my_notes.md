@@ -251,6 +251,43 @@ for x in reversed(lst):
 
 
 
+### 단어 비교 zip
+
+단어를 zip으로 묶어 비교 가능
+
+```python
+a = "hit"
+b = "hot"
+
+cmp = zip(a, b)
+
+next(cmp)
+('h', 'h')
+next(cmp)
+('i', 'o')
+next(cmp)
+('t', 't')
+
+a = "hit"
+b = "hot"
+
+cmp = zip(a, b)
+
+for x,y in zip(a,b):
+	if x != y:
+		print("다르다")
+	else:
+		print("같다")
+		
+같다		# ('h', 'h')
+다르다		# ('i', 'o')
+같다		# ('t', 't')
+```
+
+
+
+
+
 
 
 ----
