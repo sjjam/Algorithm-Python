@@ -288,6 +288,24 @@ for x,y in zip(a,b):
 
 
 
+### any
+
+> **전달받은 자료형의 element 중 하나라도 True일 경우 True를 돌려준다.** 
+>
+> **(만약 empty 값을 argument로 넘겨주었다면 False를 돌려준다.)**
+>
+> 출처: https://technote.kr/241 [TechNote.kr]
+
+```python
+a = [False, False]
+print(any(a)) # False
+
+a = [False, True]
+print(any(a)) # True
+```
+
+
+
 
 
 ----
