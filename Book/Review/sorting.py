@@ -68,10 +68,63 @@
 # r1
 # https://www.acmicpc.net/problem/18310
 
-n = int(input())
-pos = list(map(int, input().split()))
-pos.sort()
+# n = int(input())
+# pos = list(map(int, input().split()))
+# pos.sort()
 
-ans = pos[(n - 1) // 2]
+# ans = pos[(n - 1) // 2]
+
+# print(ans)
+
+
+
+# 실패율
+# r1
+# https://programmers.co.kr/learn/courses/30/lessons/42889
+
+# def solution(N, stages):
+#     answer = []
+#     per = []
+#     num = len(stages)
+    
+#     for i in range(1, N + 1):
+#         cnt = 0
+#         if num == 0:
+#             per.append((i, 0))
+#         else:
+#             if i in stages:
+#                 cnt = stages.count(i)
+#             per.append((i, cnt/num))
+#             num -= cnt
+    
+#     per.sort(key=lambda x:(-x[1], x[0]))
+#     for i in per:
+#         answer.append(i[0])
+
+#     return answer
+
+
+
+# 카드 정렬하기
+# r1 x
+# https://www.acmicpc.net/problem/1715
+
+import heapq
+
+n = int(input())
+
+h = []
+for i in range(n):
+    heapq.heappush(h, int(input()))
+
+ans = 0
+
+while len(h) != 1:
+    c1 = heapq.heappop(h)
+    c2 = heapq.heappop(h)
+    s = c1 + c2
+    ans += s
+
+    heapq.heappush(h, s)
 
 print(ans)
