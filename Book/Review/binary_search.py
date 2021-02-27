@@ -95,23 +95,57 @@
 # 고정점 찾기
 # r1
 
-def binary_search(arr, start, end):
-    while start <= end:
-        mid = (start + end) // 2
+# def binary_search(arr, start, end):
+#     while start <= end:
+#         mid = (start + end) // 2
 
-        if arr[mid] == mid:
-            return mid
-        elif arr[mid] > mid:
-            end = mid - 1
-        else:
-            start = mid + 1
-    return None
+#         if arr[mid] == mid:
+#             return mid
+#         elif arr[mid] > mid:
+#             end = mid - 1
+#         else:
+#             start = mid + 1
+#     return None
 
-n = int(input())
-arr = list(map(int, input().split()))
+# n = int(input())
+# arr = list(map(int, input().split()))
 
-ans = binary_search(arr, 0, n - 1)
-if ans == None:
-    print(-1)
-else:
-    print(ans)
+# ans = binary_search(arr, 0, n - 1)
+# if ans == None:
+#     print(-1)
+# else:
+#     print(ans)
+
+
+
+# 공유기 설치
+# r1 x
+# https://www.acmicpc.net/problem/2110
+
+n, c = map(int, input().split())
+x = []
+for i in range(n):
+    x.append(int(input()))
+x.sort()
+
+start = x[1] - x[0]
+end = x[-1] - x[0]
+result = 0
+
+while start <= end:
+    mid = (start + end) // 2
+    value = x[0]
+    count = 1
+
+    for i in range(1, n):
+        if x[i] >= value + mid:
+            value = x[i]
+            count += 1
+    
+    if count >= c:
+        start = mid + 1
+        result = mid
+    else:
+        end = mid - 1
+
+print(result)
