@@ -122,30 +122,80 @@
 # r1 x
 # https://www.acmicpc.net/problem/2110
 
-n, c = map(int, input().split())
-x = []
-for i in range(n):
-    x.append(int(input()))
-x.sort()
+# n, c = map(int, input().split())
+# x = []
+# for i in range(n):
+#     x.append(int(input()))
+# x.sort()
 
-start = x[1] - x[0]
-end = x[-1] - x[0]
-result = 0
+# start = x[1] - x[0]
+# end = x[-1] - x[0]
+# result = 0
 
-while start <= end:
-    mid = (start + end) // 2
-    value = x[0]
-    count = 1
+# while start <= end:
+#     mid = (start + end) // 2
+#     value = x[0]
+#     count = 1
 
-    for i in range(1, n):
-        if x[i] >= value + mid:
-            value = x[i]
-            count += 1
+#     for i in range(1, n):
+#         if x[i] >= value + mid:
+#             value = x[i]
+#             count += 1
     
-    if count >= c:
-        start = mid + 1
-        result = mid
-    else:
-        end = mid - 1
+#     if count >= c:
+#         start = mid + 1
+#         result = mid
+#     else:
+#         end = mid - 1
 
-print(result)
+# print(result)
+
+
+
+# 가사 검색
+# r1
+# https://programmers.co.kr/learn/courses/30/lessons/60060
+
+from bisect import bisect_left, bisect_right
+
+def binary_search(dic, target):
+    leng = len(target)
+    target_left = target.replace('?', 'a')
+    target_right = target.replace('?', 'z')
+    if leng in dic:
+        arr = dic[leng]
+    else:
+        return 0
+    left = bisect_left(arr, target_left)
+    right = bisect_right(arr, target_right)
+    return right - left
+
+def solution(words, queries):
+    answer = []
+    dic = {}
+    dic_reverse = {}
+    for i in words:
+        leng = len(i)
+        if leng not in dic:
+            dic[leng] = [i]
+            dic_reverse[leng] = [i[::-1]]
+        else:
+            dic[leng].append(i)
+            dic_reverse[leng].append(i[::-1])
+    
+    keys = dic.keys()
+    keys_r = dic_reverse.keys()
+    for i in keys:
+        dic[i].sort()
+    for i in keys_r:
+        dic_reverse[i].sort()
+    
+    for i in queries:
+        idx = i.index('?')
+        if idx != 0:
+            answer.append(binary_search(dic, i))
+        else:
+            i = i[::-1]
+            answer.append(binary_search(dic_reverse, i))
+
+    return answer
