@@ -55,13 +55,110 @@
 # 8-3
 # r1 x
 
+# n = int(input())
+# d = [0] * 1001
+
+# d[1] = 1
+# d[2] = 3
+
+# for i in range(3, n + 1):
+#     d[i] = (d[i - 1] + 2 * d[i - 2]) % 796796
+
+# print(d)
+
+
+
+# 8-4
+# r1
+
+# n, m = map(int, input().split())
+# n_list = []
+# for i in range(n):
+#     n_list.append(int(input()))
+
+# n_list.sort()
+# d = [10001] * 10001
+# for i in n_list:
+#     d[i] = 1
+
+# for i in range(n_list[0], m + 1):
+#     for j in n_list:
+#         d[i] = min(d[i], d[i - j] + 1)
+
+# if d[m] == 10001:
+#     d[m] = -1
+# print(d[m])
+
+
+
+# n, m = map(int, input().split())
+# array = []
+# for i in range(n):
+#     array.append(int(input()))
+
+# d = [10001] * (m + 1)
+# d[0] = 0
+
+# for i in range(n):
+#     for j in range(array[i], m + 1):
+#         if d[j - array[i]] != 10001:
+#             d[j] = min(d[j], d[j - array[i]] + 1)
+
+# if d[m] == 10001:
+#     print(-1)
+# else:
+#     print(d[m])
+
+
+
+# 금광
+# r1
+
+# t = int(input())
+# for _ in range(t):
+#     n, m = map(int, input().split())
+#     arr = [[0] * m for _ in range(n)]
+#     gold = list(map(int, input().split()))
+#     idx = 0
+#     for i in range(n):
+#         for j in range(m):
+#             arr[i][j] = gold[idx]
+#             idx += 1
+
+#     for j in range(1, m):
+#         for i in range(n):
+#             if i == 0:
+#                 arr[i][j] += max(arr[i][j - 1], arr[i + 1][j - 1])
+#             elif i == n - 1:
+#                 arr[i][j] += max(arr[i - 1][j - 1], arr[i][j - 1])
+#             else:
+#                 arr[i][j] += max(arr[i - 1][j - 1], arr[i][j - 1], arr[i + 1][j - 1])
+
+#     ans = 0
+#     for i in range(n):
+#         ans = max(ans, arr[i][m - 1])
+
+#     print(ans)
+
+
+
+# 정수 삼각형
+# r1
+# https://www.acmicpc.net/problem/1932
+
 n = int(input())
-d = [0] * 1001
+arr = []
+for _ in range(n):
+    line = list(map(int, input().split()))
+    arr.append(line)
 
-d[1] = 1
-d[2] = 3
+for i in range(1, n):
+    for j in range(i + 1):
+        if j == 0:
+            arr[i][j] += arr[i - 1][j]
+        elif j == i:
+            arr[i][j] += arr[i - 1][j - 1]
+        else:
+            arr[i][j] += max(arr[i - 1][j - 1], arr[i - 1][j])
 
-for i in range(3, n + 1):
-    d[i] = (d[i - 1] + 2 * d[i - 2]) % 796796
-
-print(d)
+print(max(arr[n - 1]))
