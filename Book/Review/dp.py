@@ -146,19 +146,66 @@
 # r1
 # https://www.acmicpc.net/problem/1932
 
+# n = int(input())
+# arr = []
+# for _ in range(n):
+#     line = list(map(int, input().split()))
+#     arr.append(line)
+
+# for i in range(1, n):
+#     for j in range(i + 1):
+#         if j == 0:
+#             arr[i][j] += arr[i - 1][j]
+#         elif j == i:
+#             arr[i][j] += arr[i - 1][j - 1]
+#         else:
+#             arr[i][j] += max(arr[i - 1][j - 1], arr[i - 1][j])
+
+# print(max(arr[n - 1]))
+
+
+
+# 퇴사
+# r1 x
+# https://www.acmicpc.net/problem/14501
+
+# n = int(input())
+# t = []
+# p = []
+# dp = [0] * (n + 1)
+# max_value = 0
+
+# for _ in range(n):
+#     x, y = map(int, input().split())
+#     t.append(x)
+#     p.append(y)
+
+# for i in range(n - 1, -1, -1):
+#     time = t[i] + i
+
+#     if time <= n:
+#         dp[i] = max(p[i] + dp[time], max_value)
+#         max_value = dp[i]
+#     else:
+#         dp[i] = max_value
+
+# print(max_value)
+
+
+
+# 병사 배치하기
+# r1 x
+# https://www.acmicpc.net/problem/18353
+
 n = int(input())
-arr = []
-for _ in range(n):
-    line = list(map(int, input().split()))
-    arr.append(line)
+array = list(map(int, input().split()))
+array.reverse()
+print(array)
+dp = [1] * n
 
 for i in range(1, n):
-    for j in range(i + 1):
-        if j == 0:
-            arr[i][j] += arr[i - 1][j]
-        elif j == i:
-            arr[i][j] += arr[i - 1][j - 1]
-        else:
-            arr[i][j] += max(arr[i - 1][j - 1], arr[i - 1][j])
-
-print(max(arr[n - 1]))
+    for j in range(0, i):
+        if array[j] < array[i]:
+            dp[i] = max(dp[i], dp[j] + 1)
+print(dp)
+print(n - max(dp))
