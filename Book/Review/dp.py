@@ -197,15 +197,72 @@
 # r1 x
 # https://www.acmicpc.net/problem/18353
 
-n = int(input())
-array = list(map(int, input().split()))
-array.reverse()
-print(array)
-dp = [1] * n
+# n = int(input())
+# array = list(map(int, input().split()))
+# array.reverse()
+# print(array)
+# dp = [1] * n
 
-for i in range(1, n):
-    for j in range(0, i):
-        if array[j] < array[i]:
-            dp[i] = max(dp[i], dp[j] + 1)
-print(dp)
-print(n - max(dp))
+# for i in range(1, n):
+#     for j in range(0, i):
+#         if array[j] < array[i]:
+#             dp[i] = max(dp[i], dp[j] + 1)
+# print(dp)
+# print(n - max(dp))
+
+
+
+# 못생긴 수
+# r1 x
+
+# n = int(input())
+# d = [0] * n
+# d[0] = 1
+
+# idx2, idx3, idx5 = 0, 0, 0
+# res2, res3, res5 = 2, 3, 5
+
+# for i in range(1, n):
+#     d[i] = min(res2, res3, res5)
+    
+#     if d[i] == res2:
+#         idx2 += 1
+#         res2 = d[idx2] * 2
+#     if d[i] == res3:
+#         idx3 += 1
+#         res3 = d[idx3] * 3
+#     if d[i] == res5:
+#         idx5 += 1
+#         res5 = d[idx5] * 5
+
+# print(d[n - 1])
+
+
+
+# 편집 거리
+# r1 x
+
+def edit_dist(str1, str2):
+    n = len(str1)
+    m = len(str2)
+
+    dp = [[0] * (m + 1) for _ in range(n + 1)]
+
+    for i in range(1, n + 1):
+        dp[i][0] = i
+    for j in range(1, m + 1):
+        dp[0][j] = j
+    
+    for i in range(1, n + 1):
+        for j in range(1, m + 1):
+            if str1[i - 1] == str2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1]
+            else:
+                dp[i][j] = 1 + min(dp[i][j - 1], dp[i - 1][j], dp[i - 1][j - 1])
+    print(dp)
+    return dp[n][m]
+
+str1 = input()
+str2 = input()
+
+print(edit_dist(str1, str2))
