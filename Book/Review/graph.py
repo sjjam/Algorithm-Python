@@ -121,6 +121,80 @@
 # 여행 계획
 # r1
 
+# def find_parent(parent, x):
+#     if parent[x] != x:
+#         parent[x] = find_parent(parent, parent[x])
+#     return parent[x]
+
+# def union_parent(parent, a, b):
+#     a = find_parent(parent, a)
+#     b = find_parent(parent, b)
+#     if a < b:
+#         parent[b] = a
+#     else:
+#         parent[a] = b
+
+# n, m = map(int, input().split())
+# parent = [0] * (n + 1)
+# ans = 'YES'
+
+# for i in range(1, n + 1):
+#     parent[i] = i
+
+# for i in range(n):
+#     data = list(map(int, input().split()))
+#     for j in range(n):
+#         if data[j] == 1:
+#             union_parent(parent, i + 1, j + 1)
+
+# plan = list(map(int, input().split()))
+
+# for i in range(len(plan) - 1):
+#     if parent[plan[i]] != parent[plan[i + 1]]:
+#         ans = 'NO'
+
+# print(ans)
+
+
+
+# 탑승구
+# r1 x
+
+# def find_parent(parent, x):
+#     if parent[x] != x:
+#         parent[x] = find_parent(parent, parent[x])
+#     return parent[x]
+
+# def union_parent(parent, a, b):
+#     a = find_parent(parent, a)
+#     b = find_parent(parent, b)
+#     if a < b:
+#         parent[b] = a
+#     else:
+#         parent[a] = b
+
+# g = int(input())
+# p = int(input())
+# parent = [0] * (g + 1)
+
+# for i in range(1, g + 1):
+#     parent[i] = i
+
+# result = 0
+# for i in range(p):
+#     data = find_parent(parent, int(input()))
+#     if data == 0:
+#         break
+#     union_parent(parent, data, data - 1)
+#     result += 1
+
+# print(result)
+
+
+
+# 어두운 길
+# r1
+
 def find_parent(parent, x):
     if parent[x] != x:
         parent[x] = find_parent(parent, parent[x])
@@ -135,22 +209,24 @@ def union_parent(parent, a, b):
         parent[a] = b
 
 n, m = map(int, input().split())
-parent = [0] * (n + 1)
-ans = 'YES'
-
-for i in range(1, n + 1):
-    parent[i] = i
+parent = [0] * n
+edges = []
+result = 0
 
 for i in range(n):
-    data = list(map(int, input().split()))
-    for j in range(n):
-        if data[j] == 1:
-            union_parent(parent, i + 1, j + 1)
+    parent[i] = i
 
-plan = list(map(int, input().split()))
+for i in range(m):
+    x, y, z = map(int, input().split())
+    result += z
+    edges.append((z, x, y))
 
-for i in range(len(plan) - 1):
-    if parent[plan[i]] != parent[plan[i + 1]]:
-        ans = 'NO'
+edges.sort()
 
-print(ans)
+for edge in edges:
+    cost, x, y = edge
+    if find_parent(parent, x) != find_parent(parent, y):
+        union_parent(parent, x, y)
+        result -= cost
+
+print(result)
