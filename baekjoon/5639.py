@@ -5,7 +5,7 @@
 def postorder(start, end):
     if start > end:
         return
- 
+
     division = end + 1
     for i in range(start + 1, end + 1):
         if data[start] < data[i]:
