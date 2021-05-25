@@ -61,3 +61,72 @@ for i in range(r):
 
 water()
 bfs(x, y)
+
+
+
+from collections import deque
+
+def water(water_area, data):
+    new = []
+    for i in water_area:
+        for j in range(4):
+            nx = i[0] + dx[j]
+            ny = i[1] + dy[j]
+
+            if nx < 0 or nx >= r or ny < 0 or ny >= c:
+                continue
+
+            if data[nx][ny] == '.' or data[nx][ny] == 'S':
+                data[nx][ny] = '*'
+                new.append((nx, ny))
+    return new
+
+def move(x, y, water_area):
+    q = deque()
+    q.append((x, y))
+    while q:
+        cnt = len(q)
+        if len(water_area) != 0:
+            water_area = water(water_area, data)
+        while cnt:
+            now_x, now_y = q.popleft()
+            
+            for i in range(4):
+                nx = now_x + dx[i]
+                ny = now_y + dy[i]
+
+                if nx < 0 or nx >= r or ny < 0 or ny >= c:
+                    continue
+                
+                if data[nx][ny] == 'D':
+                    result[nx][ny] = result[now_x][now_y] + 1
+                    return result[nx][ny]
+                    
+                if data[nx][ny] == '.' and result[nx][ny] == 0 and data[nx][ny] != 'S':
+                    result[nx][ny] = result[now_x][now_y] + 1
+                    q.append((nx, ny))
+            cnt -= 1
+
+r, c = map(int, input().split())
+data = []
+water_area = []
+x, y = 0, 0
+for i in range(r):
+    line = list(input())
+    data.append(line)
+    for j in range(len(line)):
+        if line[j] == 'S':
+            x = i
+            y = j
+        if line[j] == '*':
+            water_area.append((i, j))
+
+dx = [-1, 0, 1, 0]
+dy = [0, -1, 0, 1]
+result = [[0] * c for _ in range(r)]
+ans = move(x, y, water_area)
+
+if ans == None:
+    print('KAKTUS')
+else:
+    print(ans)
