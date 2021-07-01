@@ -1,8 +1,9 @@
 # 자동차경주
+# r1 x
 # https://www.acmicpc.net/problem/2611
 
 
-# https://ksj14.tistory.com/entry/BaekJoon2611-%EC%9E%90%EB%8F%99%EC%B0%A8-%EA%B2%BD%EC%A3%BC
+# https://ksj14.tistory.com/entry/BaekJoon2611-%EC%9E%90%EB%8F%99%EC%B0%A8-%EA%B2%BD%EC%A3%BC 
 
 # 실패
 
