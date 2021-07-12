@@ -125,7 +125,6 @@ q = deque()
 q.append((1))
 result = [0] * (n + 1)
 road = [0] * (n + 1)
-visited = [[] for _ in range(n + 1)]
 
 while q:
     now = q.popleft()
@@ -134,7 +133,6 @@ while q:
     
     for i in graph[now]:
         indegree[i[0]] -= 1
-        visited[i[0]].append((now, i[1]))
         if result[now] + i[1] > result[i[0]]:
             result[i[0]] = result[now] + i[1]
             road[i[0]] = now
